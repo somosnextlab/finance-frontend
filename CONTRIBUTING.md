@@ -3,10 +3,12 @@
 ## Flujo de trabajo
 
 ### Ramas principales
+
 - `main`: Rama de producción
 - `develop`: Rama de desarrollo
 
 ### Flujo de ramas
+
 1. Crear una rama feature desde `develop`
 2. Realizar los cambios necesarios
 3. Crear un Pull Request hacia `develop`
@@ -16,16 +18,19 @@
 ## Estándares de código
 
 ### TypeScript
+
 - Usar tipos estrictos
 - Preferir interfaces sobre types cuando sea posible
 - Documentar funciones complejas
 
 ### React
+
 - Usar componentes funcionales con hooks
 - Preferir composición sobre herencia
 - Usar Suspense para componentes async
 
 ### Estilos
+
 - Usar Material-UI como sistema de diseño
 - Seguir convenciones BEM cuando ayude a la claridad
 - Usar tokens de diseño del archivo `styles/tokens.ts`

@@ -6,7 +6,7 @@ import { zonedTimeToUtc, utcToZonedTime } from "date-fns-tz";
 export const formatDate = (date: string | Date, formatString = "dd/MM/yyyy"): string => {
   try {
     const dateObj = typeof date === "string" ? parseISO(date) : date;
-    
+
     if (!isValid(dateObj)) {
       return "Fecha inválida";
     }
@@ -34,7 +34,7 @@ export const fromUTC = (date: Date, timeZone: string): Date => {
 export const isToday = (date: string | Date): boolean => {
   const dateObj = typeof date === "string" ? parseISO(date) : date;
   const today = new Date();
-  
+
   return (
     dateObj.getDate() === today.getDate() &&
     dateObj.getMonth() === today.getMonth() &&

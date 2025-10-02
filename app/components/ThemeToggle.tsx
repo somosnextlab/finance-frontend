@@ -1,14 +1,14 @@
-'use client';
-import { IconButton, Tooltip } from '@mui/material';
-import DarkModeIcon from '@mui/icons-material/DarkMode';
-import LightModeIcon from '@mui/icons-material/LightMode';
-import { useColorScheme } from '@mui/material/styles';
-import { useEffect, useState } from 'react';
+"use client";
+import { IconButton, Tooltip } from "@mui/material";
+import DarkModeIcon from "@mui/icons-material/DarkMode";
+import LightModeIcon from "@mui/icons-material/LightMode";
+import { useColorScheme } from "@mui/material/styles";
+import { useEffect, useState } from "react";
 
 export default function ThemeToggle() {
   const { mode, setMode } = useColorScheme();
   const [mounted, setMounted] = useState(false);
-  
+
   useEffect(() => {
     setMounted(true);
   }, []);
@@ -23,10 +23,10 @@ export default function ThemeToggle() {
     );
   }
 
-  const isDark = mode === 'dark';
+  const isDark = mode === "dark";
   return (
-    <Tooltip title={isDark ? 'Modo claro' : 'Modo oscuro'}>
-      <IconButton aria-label="alternar tema" onClick={() => setMode(isDark ? 'light' : 'dark')}>
+    <Tooltip title={isDark ? "Modo claro" : "Modo oscuro"}>
+      <IconButton aria-label="alternar tema" onClick={() => setMode(isDark ? "light" : "dark")}>
         {isDark ? <LightModeIcon /> : <DarkModeIcon />}
       </IconButton>
     </Tooltip>
