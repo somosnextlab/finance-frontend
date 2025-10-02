@@ -6,13 +6,13 @@ module.exports = {
     "next/core-web-vitals",
     "eslint:recommended",
     "plugin:@typescript-eslint/recommended",
-    "prettier"
+    "prettier",
   ],
   rules: {
     "unused-imports/no-unused-imports": "error",
     "@typescript-eslint/no-unused-vars": [
       "error",
-      { "argsIgnorePattern": "^_", "varsIgnorePattern": "^_" }
-    ]
-  }
+      { argsIgnorePattern: "^_", varsIgnorePattern: "^_" },
+    ],
+  },
 };

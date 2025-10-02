@@ -4,7 +4,7 @@
 export const defaultLocale = "es" as const;
 export const locales = ["es", "en"] as const;
 
-export type Locale = typeof locales[number];
+export type Locale = (typeof locales)[number];
 
 export const localeNames: Record<Locale, string> = {
   es: "Español",
@@ -14,6 +14,6 @@ export const localeNames: Record<Locale, string> = {
 export const getLocaleFromPathname = (pathname: string): Locale => {
   const segments = pathname.split("/");
   const locale = segments[1] as Locale;
-  
+
   return locales.includes(locale) ? locale : defaultLocale;
 };

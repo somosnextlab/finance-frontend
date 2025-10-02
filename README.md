@@ -9,6 +9,7 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 ### 🎯 Características Implementadas
 
 #### 🎨 Sistema de Theming
+
 - **CSS Variables** con prefijo `nl-` para evitar conflictos
 - **Modo claro/oscuro** con persistencia en localStorage
 - **SSR-safe** con `getInitColorSchemeScript()` personalizado
@@ -16,6 +17,7 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 - **Tokens de diseño** con escalas de color y espaciamiento
 
 #### 🏗️ Layout y Componentes
+
 - **AppShell** responsivo con grid CSS
 - **Header** con navegación y toggle de tema
 - **Sidebar** colapsable en móviles
@@ -23,12 +25,14 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 - **Componentes globales** reutilizables
 
 #### 📝 Formularios y Validación
+
 - **Wrappers RHF+MUI** tipados con TypeScript
 - **Validación** con Zod schemas
 - **Estados de error** integrados
 - **Accesibilidad** con aria-labels
 
 #### 🚀 Rendimiento y Calidad
+
 - **TypeScript estricto** sin errores
 - **Build optimizado** para producción
 - **Hidratación segura** sin warnings
@@ -37,12 +41,14 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 #### 📁 Archivos Creados/Modificados en Etapa 1
 
 **Sistema de Theming:**
+
 - `app/styles/tokens.ts` - Tokens de diseño con escalas de color
 - `app/styles/theme.ts` - Tema MUI con CSS Variables
 - `app/providers.tsx` - Proveedor principal con CssVarsProvider
 - `app/globals.css` - Normalización CSS y variables de fuente
 
 **Layout y Componentes:**
+
 - `app/components/AppShell.tsx` - Shell principal responsivo
 - `app/components/Header.tsx` - Header con toggle de tema
 - `app/components/Sidebar.tsx` - Navegación lateral
@@ -50,17 +56,20 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 - `app/components/ThemeToggle.tsx` - Toggle tema con hidratación segura
 
 **Componentes Globales:**
+
 - `app/components/Loading.tsx` - Estado de carga
 - `app/components/ErrorState.tsx` - Estado de error con retry
 - `app/components/EmptyState.tsx` - Estado vacío
 - `app/components/DataTable.tsx` - Tabla base con MUI
 
 **Wrappers de Formularios:**
+
 - `app/components/form/FormTextField.tsx` - Campo de texto RHF+MUI
 - `app/components/form/FormSelect.tsx` - Select RHF+MUI
 - `app/components/form/index.ts` - Re-exports
 
 **Páginas Demo:**
+
 - `app/page.tsx` - Landing con AppShell
 - `app/(private)/loans/page.tsx` - Demo con formulario y tabla
 - `app/(private)/payments/page.tsx` - Demo con estado vacío
@@ -68,6 +77,7 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 - `app/loading.tsx` - Loading fallback
 
 **Configuración:**
+
 - `app/layout.tsx` - Layout raíz con tipografía Inter y proveedores
 
 ### 🎯 Características Implementadas
