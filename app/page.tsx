@@ -1,25 +1,12 @@
-import { Box, Container, Typography } from "@mui/material";
+import AppShell from '@/app/components/AppShell';
+import { Typography, Button } from '@mui/material';
 
-export default function HomePage() {
+export default function Page() {
   return (
-    <Container maxWidth="lg">
-      <Box
-        sx={{
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "center",
-          justifyContent: "center",
-          minHeight: "100vh",
-          textAlign: "center",
-        }}
-      >
-        <Typography variant="h2" component="h1" gutterBottom>
-          Financiera NextLab
-        </Typography>
-        <Typography variant="h5" color="text.secondary">
-          Front listo
-        </Typography>
-      </Box>
-    </Container>
+    <AppShell>
+      <Typography variant="h3" gutterBottom>Bienvenido</Typography>
+      <Typography variant="body1" gutterBottom>Front listo con layout, tema y componentes base.</Typography>
+      <Button variant="contained">CTA</Button>
+    </AppShell>
   );
 }
