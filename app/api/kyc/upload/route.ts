@@ -3,7 +3,11 @@ import { env } from "@/utils/env";
 
 export async function POST(req: Request) {
   try {
-    requireAuth();
+    // Solo requerir autenticación en producción
+    if (process.env.NODE_ENV === "production") {
+      requireAuth();
+    }
+
     const form = await req.formData();
     const file = form.get("file") as File | null;
     if (!file) return jsonErr("file requerido", 400);

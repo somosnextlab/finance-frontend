@@ -10,6 +10,35 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 
 **Validación de entorno con Zod + CSP + Sanitización HTML + Cliente fetch con interceptores + React Query en layouts privados + Route Handlers BFF para auth, payments y kyc con proxies firmados**
 
+## ✅ Etapa 3 Completada
+
+**Wizard completo de onboarding con validaciones exhaustivas (Zod), formularios accesibles (RHF+MUI), máscaras AR (CUIL/CBU/teléfono), captura y compresión de imágenes con Uppy (incl. webcam y preview), i18n base en español, y BFF→API usando route handlers**
+
+### 🎯 Funcionalidades Implementadas en Etapa 3
+
+#### 🧙‍♂️ Wizard de Onboarding Completo
+- **5 pasos secuenciales** con navegación fluida y validación en tiempo real
+- **Persistencia de datos** con localStorage y recuperación automática
+- **Estados de validación** (idle, pending, valid, invalid) por cada paso
+- **Guardas de navegación** para prevenir saltos de pasos inválidos
+- **Máquina de estados** centralizada para control del flujo
+
+#### 📝 Pasos Implementados
+
+1. **Contacto** - Email y teléfono argentino con validación
+2. **Datos Personales** - Nombre, apellido, DNI y CUIL con máscaras
+3. **Domicilio** - Dirección completa con validación postal argentina
+4. **KYC** - Subida de documentos (DNI frente/dorso + selfie) con Uppy
+5. **Revisión** - Resumen final y confirmación de datos
+
+#### 📸 Sistema de Carga de Documentos KYC
+- **Uppy integrado** con compresión automática de imágenes
+- **Captura webcam** para selfies con preview en tiempo real
+- **Validación estricta** (solo JPG/PNG, máximo 3MB por archivo)
+- **Subida paralela** de múltiples archivos con manejo de errores
+- **Feedback visual** de progreso y archivos subidos
+- **API endpoint** `/api/kyc/upload` con autenticación condicional (solo en producción)
+
 ### 🎯 Características Implementadas en Etapa 2
 
 #### 🔒 Seguridad y Validación
@@ -43,6 +72,85 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 - **KYC** con upload de archivos
 - **Health checks** para monitoreo
 - **Smoke tests** automatizados
+
+### 🎯 Características Implementadas en Etapa 3
+
+#### 🧙‍♂️ Wizard de Onboarding
+
+- **Wizard completo** de 5 pasos con navegación fluida
+- **Validaciones exhaustivas** con Zod en cada paso
+- **Formularios accesibles** con React Hook Form + Material-UI
+- **Persistencia de datos** con localStorage y React Query
+- **Guardas de ruta** para prevenir navegación inválida
+- **Estados de validación** (idle, pending, valid, invalid)
+
+#### 📝 Pasos del Wizard
+
+1. **Contacto**: Email y teléfono argentino
+2. **Datos Personales**: Nombre, apellido, DNI y CUIL
+3. **Domicilio**: Dirección completa con validación postal
+4. **KYC**: Documentos (DNI frente/dorso + selfie)
+5. **Revisión**: Resumen y confirmación final
+
+#### 🇦🇷 Validaciones Argentinas
+
+- **CUIL**: Validación con algoritmo oficial + bypass para desarrollo
+- **CBU**: Formato y validación bancaria argentina
+- **Teléfono**: Formato argentino (10 dígitos)
+- **Código Postal**: 4 dígitos argentinos
+- **Máscaras de entrada** para todos los campos AR
+
+#### 📸 Sistema de Carga de Documentos
+
+- **Uppy integrado** con compresión automática
+- **Captura webcam** para selfies
+- **Validación estricta** (solo JPG/PNG, máx. 3MB)
+- **Preview de archivos** antes de subir
+- **Reintentos automáticos** en caso de fallo
+- **Feedback de progreso** en tiempo real
+
+#### 🌐 Internacionalización
+
+- **i18n base** en español
+- **Estructura preparada** para múltiples idiomas
+- **Traducciones** para todos los textos del wizard
+- **Formateo** de fechas y números argentinos
+
+#### ♿ Accesibilidad
+
+- **ARIA labels** en todos los elementos interactivos
+- **Navegación por teclado** completa
+- **Orden de tab** lógico
+- **Mensajes de error** descriptivos
+- **Contraste** optimizado para legibilidad
+
+#### 🔧 Arquitectura Técnica
+
+- **Schemas Zod** por cada paso del wizard
+- **Hooks personalizados** para estado y persistencia
+- **API client** con manejo de errores
+- **TypeScript** estricto en toda la implementación
+- **SSR compatible** con validaciones condicionales
+
+#### 📦 Dependencias Agregadas en Etapa 3
+
+**Validación y Formularios:**
+- `@hookform/resolvers` - Resolvers para RHF
+- `zod` - Validación de esquemas
+
+**Carga de Archivos:**
+- `@uppy/core` - Core de Uppy
+- `@uppy/dashboard` - Dashboard de Uppy
+- `@uppy/webcam` - Captura webcam
+- `@uppy/image-compressor` - Compresión de imágenes
+- `@uppy/progress-bar` - Barra de progreso
+
+**Validaciones Argentinas:**
+- `libphonenumber-js` - Validación de teléfonos
+- `@types/libphonenumber-js` - Tipos TypeScript
+
+**Internacionalización:**
+- `next-intl` - i18n para Next.js
 
 ### 🎯 Características Implementadas en Etapa 1
 
@@ -149,6 +257,51 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 - `smoke-tests.ps1` - Script de smoke tests automatizado
 - `SMOKE_TESTS.md` - Documentación de smoke tests
 
+#### 📁 Archivos Creados/Modificados en Etapa 3
+
+**Schemas y Validaciones:**
+- `features/onboarding/schemas/contact.ts` - Schema de datos de contacto
+- `features/onboarding/schemas/personal.ts` - Schema de datos personales
+- `features/onboarding/schemas/address.ts` - Schema de domicilio
+- `features/onboarding/schemas/kyc.ts` - Schema de documentos KYC
+- `features/onboarding/util-validators.ts` - Validadores argentinos (CUIL, CBU, teléfono)
+
+**Componentes del Wizard:**
+- `features/onboarding/components/Stepper.tsx` - Stepper del wizard
+- `features/onboarding/components/StepActions.tsx` - Botones de navegación
+- `features/onboarding/components/fields/CuilField.tsx` - Campo CUIL con máscara
+- `features/onboarding/components/fields/PhoneField.tsx` - Campo teléfono AR
+- `features/onboarding/components/fields/CbuField.tsx` - Campo CBU con máscara
+
+**Hooks y Estado:**
+- `features/onboarding/hooks/useOnboardingMachine.ts` - Máquina de estados del wizard
+- `features/onboarding/hooks/useDraftStorage.ts` - Persistencia con localStorage
+
+**UI y Carga de Archivos:**
+- `features/onboarding/ui/UppyKycUploader.tsx` - Componente de carga con Uppy
+- `features/onboarding/api/onboarding.ts` - Cliente API para onboarding
+
+**Páginas del Wizard:**
+- `app/(public)/onboarding/layout.tsx` - Layout del wizard
+- `app/(public)/onboarding/page.tsx` - Página principal (redirige a paso 1)
+- `app/(public)/onboarding/step/[step]/page.tsx` - Controlador de pasos
+- `app/(public)/onboarding/step/[step]/steps/ContactStep.tsx` - Paso 1: Contacto
+- `app/(public)/onboarding/step/[step]/steps/PersonalStep.tsx` - Paso 2: Personales
+- `app/(public)/onboarding/step/[step]/steps/AddressStep.tsx` - Paso 3: Domicilio
+- `app/(public)/onboarding/step/[step]/steps/KycStep.tsx` - Paso 4: KYC
+- `app/(public)/onboarding/step/[step]/steps/ReviewStep.tsx` - Paso 5: Revisión
+- `app/(public)/onboarding/status/page.tsx` - Estado del onboarding
+
+**Datos de Prueba:**
+- `features/onboarding/mocks/testData.ts` - Datos mock para testing
+
+**Configuración:**
+- `.env.local` - Variables de entorno locales
+- `app/i18n/locales/es/onboarding.json` - Traducciones del wizard
+
+**API Endpoints:**
+- `app/api/kyc/upload/route.ts` - Endpoint de subida de documentos KYC (modificado para desarrollo sin auth)
+
 ### 🎯 Características Implementadas
 
 - **Next.js 14** con App Router para rendimiento óptimo
@@ -218,7 +371,13 @@ app/
 │   ├── loans/         # Módulo de préstamos (demo)
 │   └── payments/      # Módulo de pagos (demo)
 ├── (public)/          # Rutas públicas
+│   └── onboarding/    # Wizard de onboarding
+│       ├── step/[step]/ # Pasos del wizard (1-5)
+│       └── status/     # Estado del onboarding
 ├── api/               # API Routes de Next.js
+│   ├── auth/          # Autenticación
+│   ├── kyc/           # Know Your Customer
+│   ├── payments/      # Pagos
 │   └── health/        # Health check endpoint
 ├── components/        # Componentes reutilizables
 │   ├── form/          # Wrappers de formularios RHF+MUI
@@ -236,6 +395,13 @@ app/
 │   ├── DataTable.tsx  # Tabla base con MUI
 │   └── query-provider.tsx
 ├── features/          # Funcionalidades específicas del dominio
+│   └── onboarding/    # Módulo de onboarding
+│       ├── schemas/   # Schemas Zod por paso
+│       ├── components/ # Componentes del wizard
+│       ├── hooks/     # Hooks personalizados
+│       ├── api/       # Cliente API
+│       ├── ui/        # Componentes UI específicos
+│       └── mocks/     # Datos de prueba
 ├── i18n/              # Configuración de internacionalización
 │   ├── config.ts
 │   └── locales/
@@ -306,7 +472,13 @@ pnpm format           # Formatear con Prettier
 pnpm typecheck        # Verificar tipos TypeScript
 
 # Testing
-pnpm test             # Ejecutar tests (Jest)
+pnpm test             # Ejecutar tests
+pnpm test:coverage    # Tests con cobertura
+pnpm test:single      # Tests una sola vez
+
+# Onboarding (Etapa 3)
+# Acceder a: http://localhost:3000/onboarding
+# Wizard completo de 5 pasos con validaciones AR (Jest)
 
 # Git hooks
 pnpm prepare          # Configurar Husky
@@ -499,7 +671,24 @@ El proyecto está preparado para múltiples idiomas:
 - [x] Smoke tests automatizados
 - [x] Build y typecheck exitosos
 
-### 🚧 Etapa 3 - En Desarrollo
+### ✅ Etapa 3 - Completada
+
+**Wizard de Onboarding + Validaciones AR + Carga de Documentos KYC**
+
+- [x] Wizard completo de 5 pasos con navegación fluida
+- [x] Validaciones exhaustivas con Zod en cada paso
+- [x] Formularios accesibles con React Hook Form + Material-UI
+- [x] Máscaras argentinas (CUIL, CBU, teléfono, código postal)
+- [x] Sistema de carga de documentos con Uppy
+- [x] Captura webcam para selfies con preview
+- [x] Compresión automática de imágenes
+- [x] Persistencia de datos con localStorage
+- [x] i18n base en español
+- [x] API endpoint KYC con autenticación condicional
+- [x] Estados de validación y guardas de navegación
+- [x] Máquina de estados centralizada
+
+### 🚧 Etapa 4 - En Desarrollo
 
 **Dashboard principal + Autenticación + Módulos básicos**
 
