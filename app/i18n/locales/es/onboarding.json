@@ -1,0 +1,153 @@
+{
+  "title": "Alta de Cliente",
+  "subtitle": "Completa tu información para comenzar",
+  "steps": {
+    "1": "Contacto",
+    "2": "Datos Personales",
+    "3": "Domicilio",
+    "4": "Documentos KYC",
+    "5": "Revisión"
+  },
+  "actions": {
+    "next": "Siguiente",
+    "back": "Volver",
+    "confirm": "Confirmar y Enviar",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "edit": "Editar"
+  },
+  "messages": {
+    "saved": "Progreso guardado",
+    "uploading": "Subiendo documentos...",
+    "success": "Enviado correctamente",
+    "error": "Ocurrió un error",
+    "required": "Este campo es requerido",
+    "invalid": "Valor inválido",
+    "loading": "Cargando...",
+    "processing": "Procesando..."
+  },
+  "contact": {
+    "title": "Información de Contacto",
+    "subtitle": "Necesitamos tus datos de contacto para comunicarnos contigo",
+    "email": "Email",
+    "emailPlaceholder": "tu@email.com",
+    "phone": "Teléfono",
+    "phonePlaceholder": "Ej: 351 6xx xxxx",
+    "phoneHelper": "Ingresa tu número de teléfono argentino (10 dígitos)"
+  },
+  "personal": {
+    "title": "Datos Personales",
+    "subtitle": "Información personal requerida para la verificación",
+    "firstName": "Nombre",
+    "lastName": "Apellido",
+    "dni": "DNI",
+    "dniPlaceholder": "12345678",
+    "cuil": "CUIL",
+    "cuilPlaceholder": "NN-NNNNNNNN-N",
+    "cuilHelper": "Tu CUIL de 11 dígitos"
+  },
+  "address": {
+    "title": "Domicilio",
+    "subtitle": "Dirección de residencia actual",
+    "street": "Calle",
+    "number": "Número",
+    "floor": "Piso (opcional)",
+    "apartment": "Departamento (opcional)",
+    "city": "Ciudad",
+    "province": "Provincia",
+    "postalCode": "Código Postal",
+    "postalCodePlaceholder": "5000"
+  },
+  "kyc": {
+    "title": "Documentos KYC",
+    "subtitle": "Sube los documentos requeridos para verificación",
+    "dniFront": "Frente del DNI",
+    "dniBack": "Dorso del DNI",
+    "selfie": "Selfie",
+    "uploadNote": "Sube el frente y dorso del DNI, y una selfie. Máximo 3MB por archivo.",
+    "requirements": {
+      "title": "Requisitos de los documentos:",
+      "dni": "• DNI: Frente y dorso claros, sin reflejos",
+      "selfie": "• Selfie: Rostro visible, buena iluminación",
+      "format": "• Formatos: JPG, PNG",
+      "size": "• Tamaño máximo: 3MB por archivo"
+    }
+  },
+  "review": {
+    "title": "Revisión y Confirmación",
+    "subtitle": "Verifica que toda la información sea correcta antes de enviar",
+    "contact": "Contacto",
+    "personal": "Datos Personales",
+    "address": "Domicilio",
+    "documents": "Documentos",
+    "confirmText": "Al confirmar, aceptas nuestros términos y condiciones",
+    "submitSuccess": "¡Solicitud enviada correctamente!",
+    "submitError": "Error al enviar la solicitud. Intenta nuevamente."
+  },
+  "status": {
+    "title": "Estado de tu Solicitud",
+    "subtitle": "Seguimiento del proceso de alta",
+    "pending": "Pendiente de revisión",
+    "approved": "Aprobada",
+    "rejected": "Rechazada",
+    "inProgress": "En proceso",
+    "nextSteps": "Próximos pasos",
+    "contactSupport": "Contactar soporte"
+  },
+  "validation": {
+    "email": {
+      "required": "Email es requerido",
+      "invalid": "Formato de email inválido"
+    },
+    "phone": {
+      "required": "Teléfono es requerido",
+      "invalid": "Teléfono argentino inválido (10 dígitos)"
+    },
+    "firstName": {
+      "required": "Nombre es requerido",
+      "minLength": "Nombre debe tener al menos 2 caracteres",
+      "maxLength": "Nombre muy largo"
+    },
+    "lastName": {
+      "required": "Apellido es requerido",
+      "minLength": "Apellido debe tener al menos 2 caracteres",
+      "maxLength": "Apellido muy largo"
+    },
+    "dni": {
+      "required": "DNI es requerido",
+      "invalid": "DNI debe tener 7 u 8 dígitos"
+    },
+    "cuil": {
+      "required": "CUIL es requerido",
+      "invalid": "CUIL inválido"
+    },
+    "street": {
+      "required": "Calle es requerida",
+      "minLength": "Calle debe tener al menos 3 caracteres",
+      "maxLength": "Calle muy larga"
+    },
+    "number": {
+      "required": "Número es requerido",
+      "maxLength": "Número muy largo"
+    },
+    "city": {
+      "required": "Ciudad es requerida",
+      "minLength": "Ciudad debe tener al menos 2 caracteres",
+      "maxLength": "Ciudad muy larga"
+    },
+    "province": {
+      "required": "Provincia es requerida",
+      "minLength": "Provincia debe tener al menos 2 caracteres",
+      "maxLength": "Provincia muy larga"
+    },
+    "postalCode": {
+      "required": "Código postal es requerido",
+      "invalid": "Código postal debe tener 4 dígitos"
+    },
+    "files": {
+      "required": "Archivo requerido",
+      "tooLarge": "Archivo muy grande (máx. 3MB)",
+      "invalidType": "Solo se permiten imágenes JPG/PNG"
+    }
+  }
+}

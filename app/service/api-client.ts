@@ -12,8 +12,17 @@ type FetcherOptions = {
 };
 
 function buildUrl(path: string, search?: FetcherOptions["search"]) {
+  // En desarrollo, usar URL relativa si no hay base configurada
   const base = (typeof window === "undefined" ? "" : (env.NEXT_PUBLIC_API_BASE ?? "")) || "";
-  const url = new URL(path, base || "/");
+  
+  // Si no hay base configurada, usar URL relativa
+  if (!base) {
+    const url = new URL(path, window.location.origin);
+    if (search) Object.entries(search).forEach(([k, v]) => v !== undefined && url.searchParams.set(k, String(v)));
+    return url.toString();
+  }
+  
+  const url = new URL(path, base);
   if (search) Object.entries(search).forEach(([k, v]) => v !== undefined && url.searchParams.set(k, String(v)));
   return url.toString();
 }
