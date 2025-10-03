@@ -2,10 +2,11 @@
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
-import AppShell from "@/app/components/AppShell";
-import { Typography, Button, Box, Grid, Paper, MenuItem } from "@mui/material";
+import { useState } from "react";
+import { Typography, Button, Box, Grid, Paper, MenuItem, Alert, Snackbar } from "@mui/material";
 import { FormTextField, FormSelect } from "@/app/components/form";
 import DataTable from "@/app/components/DataTable";
+import { me, login, logout } from "@/service/auth";
 
 const loanSchema = z.object({
   amount: z.string().min(1, "Monto requerido"),
@@ -34,15 +35,77 @@ export default function LoansPage() {
     resolver: zodResolver(loanSchema),
   });
 
+  const [authStatus, setAuthStatus] = useState<string>("");
+  const [snackbar, setSnackbar] = useState({ open: false, message: "", severity: "info" as "success" | "error" | "warning" | "info" });
+
   const onSubmit = (data: LoanForm) => {
     console.log("Form data:", data);
   };
 
+  const handleAuthTest = async () => {
+    try {
+      const result = await me();
+      setAuthStatus(`✅ Auth OK: ${JSON.stringify(result)}`);
+      setSnackbar({ open: true, message: "Autenticación exitosa", severity: "success" });
+    } catch (error: unknown) {
+      const err = error as { message: string; status?: number };
+      setAuthStatus(`❌ Auth Error: ${err.message} (${err.status})`);
+      setSnackbar({ open: true, message: `Error: ${err.message}`, severity: "error" });
+    }
+  };
+
+  const handleLogin = async () => {
+    try {
+      await login("test@example.com", "password");
+      setAuthStatus("✅ Login exitoso");
+      setSnackbar({ open: true, message: "Login exitoso", severity: "success" });
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      setAuthStatus(`❌ Login Error: ${err.message}`);
+      setSnackbar({ open: true, message: `Error: ${err.message}`, severity: "error" });
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setAuthStatus("✅ Logout exitoso");
+      setSnackbar({ open: true, message: "Logout exitoso", severity: "success" });
+    } catch (error: unknown) {
+      const err = error as { message: string };
+      setAuthStatus(`❌ Logout Error: ${err.message}`);
+      setSnackbar({ open: true, message: `Error: ${err.message}`, severity: "error" });
+    }
+  };
+
   return (
-    <AppShell>
+    <>
       <Typography variant="h3" gutterBottom>
         Préstamos
       </Typography>
+
+      {/* Smoke Test Panel */}
+      <Paper sx={{ p: 3, mb: 3, bgcolor: "grey.50" }}>
+        <Typography variant="h6" gutterBottom>
+          🔥 Smoke Test - Auth BFF
+        </Typography>
+        <Box sx={{ display: "flex", gap: 2, mb: 2 }}>
+          <Button variant="outlined" onClick={handleAuthTest}>
+            Test /me
+          </Button>
+          <Button variant="outlined" onClick={handleLogin}>
+            Login Test
+          </Button>
+          <Button variant="outlined" onClick={handleLogout}>
+            Logout Test
+          </Button>
+        </Box>
+        {authStatus && (
+          <Alert severity={authStatus.includes("✅") ? "success" : "error"}>
+            {authStatus}
+          </Alert>
+        )}
+      </Paper>
 
       <Grid container spacing={3}>
         <Grid item xs={12} md={6}>
@@ -99,6 +162,20 @@ export default function LoansPage() {
           </Paper>
         </Grid>
       </Grid>
-    </AppShell>
+
+      <Snackbar
+        open={snackbar.open}
+        autoHideDuration={6000}
+        onClose={() => setSnackbar({ ...snackbar, open: false })}
+      >
+        <Alert
+          onClose={() => setSnackbar({ ...snackbar, open: false })}
+          severity={snackbar.severity}
+          sx={{ width: "100%" }}
+        >
+          {snackbar.message}
+        </Alert>
+      </Snackbar>
+    </>
   );
 }

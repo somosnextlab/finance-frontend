@@ -6,7 +6,45 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 
 **Layout base + Theming light/dark + Componentes globales + Wrappers RHF**
 
-### 🎯 Características Implementadas
+## ✅ Etapa 2 Completada
+
+**Validación de entorno con Zod + CSP + Sanitización HTML + Cliente fetch con interceptores + React Query en layouts privados + Route Handlers BFF para auth, payments y kyc con proxies firmados**
+
+### 🎯 Características Implementadas en Etapa 2
+
+#### 🔒 Seguridad y Validación
+
+- **Validación de entorno** con Zod y @t3-oss/env-nextjs
+- **CSP (Content Security Policy)** nativo de Next.js con configuración optimizada
+- **Sanitización HTML** con DOMPurify para prevenir XSS
+- **Headers de seguridad** configurados en middleware y next.config.js
+- **Variables de entorno** tipadas y validadas
+- **Protección XSS** con X-XSS-Protection y CSP estricto
+- **Prevención clickjacking** con X-Frame-Options: DENY
+
+#### 🌐 Cliente HTTP y BFF
+
+- **Cliente HTTP** con interceptores de error y autenticación
+- **Route Handlers BFF** para auth, payments y kyc
+- **Proxies firmados** con HMAC para comunicaciones seguras
+- **Cookies httpOnly** para tokens de autenticación
+- **React Query** integrado en layouts privados
+
+#### 🔐 Autenticación y Autorización
+
+- **Rutas de auth** (/api/auth/login, /me, /logout)
+- **Validación de tokens** con cookies seguras
+- **Proxies a upstreams** con firmas HMAC
+- **Manejo de errores** tipado y consistente
+
+#### 📊 Módulos de Negocio
+
+- **Payments** con intents firmados
+- **KYC** con upload de archivos
+- **Health checks** para monitoreo
+- **Smoke tests** automatizados
+
+### 🎯 Características Implementadas en Etapa 1
 
 #### 🎨 Sistema de Theming
 
@@ -79,6 +117,37 @@ Aplicación web frontend para la plataforma financiera NextLab, construida con t
 **Configuración:**
 
 - `app/layout.tsx` - Layout raíz con tipografía Inter y proveedores
+
+#### 📁 Archivos Creados/Modificados en Etapa 2
+
+**Validación y Seguridad:**
+
+- `utils/env.ts` - Validación de entorno con Zod y @t3-oss/env-nextjs
+- `utils/sanitize.ts` - Sanitización HTML con DOMPurify
+- `middleware.ts` - Headers de seguridad optimizados (X-Frame-Options, X-XSS-Protection, etc.)
+- `next.config.js` - CSP nativo de Next.js con configuración optimizada
+- `.env.example` - Variables de entorno de ejemplo con validación Zod
+
+**Cliente HTTP y BFF:**
+
+- `app/service/api-client.ts` - Cliente HTTP con interceptores de error
+- `app/api/_utils.ts` - Helpers para respuestas y cookies del BFF
+- `lib/sign.ts` - Utilidades de firma HMAC para proxies seguros
+
+**Rutas BFF:**
+
+- `app/api/auth/login/route.ts` - Login con cookies httpOnly
+- `app/api/auth/me/route.ts` - Validación de autenticación
+- `app/api/auth/logout/route.ts` - Logout
+- `app/api/payments/intent/route.ts` - Intent de pago con firma HMAC
+- `app/api/kyc/upload/route.ts` - Upload de archivos KYC
+
+**Servicios y Testing:**
+
+- `service/auth.ts` - Servicio de autenticación para consumo del BFF
+- `app/(private)/loans/page.tsx` - UI con panel de smoke test visual
+- `smoke-tests.ps1` - Script de smoke tests automatizado
+- `SMOKE_TESTS.md` - Documentación de smoke tests
 
 ### 🎯 Características Implementadas
 
@@ -248,6 +317,49 @@ pnpm build            # ✅ Build exitoso
 pnpm dev              # ✅ Servidor en http://localhost:3000
 ```
 
+### 🔥 Smoke Tests - Etapa 2
+
+Para verificar que el BFF funciona correctamente, ejecuta los smoke tests:
+
+```bash
+# Iniciar servidor de desarrollo
+pnpm dev
+
+# En otra terminal, ejecutar smoke tests
+.\smoke-tests.ps1
+```
+
+**Comandos manuales de smoke test:**
+
+```bash
+# Health check
+curl -i http://localhost:3000/api/health
+
+# Auth sin cookie (debe fallar)
+curl -i http://localhost:3000/api/auth/me
+
+# Login
+curl -i -X POST http://localhost:3000/api/auth/login \
+  -H "content-type: application/json" \
+  -d '{"email":"test@example.com","password":"secret"}'
+
+# Auth con cookie (usar cookie de respuesta anterior)
+curl -i http://localhost:3000/api/auth/me \
+  -H "Cookie: nl_auth=dev.dGVzdEBleGFtcGxlLmNvbQ.token"
+
+# Payments intent
+curl -i -X POST http://localhost:3000/api/payments/intent \
+  -H "content-type: application/json" \
+  -H "Cookie: nl_auth=dev.dGVzdEBleGFtcGxlLmNvbQ.token" \
+  -d '{"amount":1000,"currency":"ARS"}'
+```
+
+**Criterios de aceptación:**
+- ✅ `/api/health` → 200
+- ✅ `/api/auth/me` → 401 sin cookie, 200 con cookie
+- ✅ `/api/payments/intent` → 400 sin datos, 200 con datos
+- ✅ Ninguna respuesta expone secretos
+
 ## 🔧 Configuración
 
 ### Variables de Entorno
@@ -255,16 +367,50 @@ pnpm dev              # ✅ Servidor en http://localhost:3000
 Copia `env.example` a `.env.local` y configura:
 
 ```env
-# API
-NEXT_PUBLIC_API_URL=http://localhost:8000/api
+# SERVER (validados con Zod)
+NODE_ENV=development
+AUTH_UPSTREAM_URL=https://auth.example.com
+PAYMENTS_UPSTREAM_URL=https://payments.example.com
+KYC_UPSTREAM_URL=https://kyc.example.com
+BFF_HMAC_SECRET=change_me_to_a_long_random_secret_32_chars_minimum
+BFF_JWT_PRIVATE_KEY=-----BEGIN PRIVATE KEY-----\n...\n-----END PRIVATE KEY-----
+COOKIE_NAME_AUTH=nl_auth
+COOKIE_DOMAIN=localhost
+COOKIE_SECURE=false
 
-# Sentry
+# CLIENT
+NEXT_PUBLIC_APP_ENV=local
+NEXT_PUBLIC_APP_NAME=Financiera NextLab
+# NEXT_PUBLIC_API_BASE=http://localhost:3000/api
+
+# Monitoreo (opcional)
 SENTRY_DSN=your_sentry_dsn
-
-# PostHog
 NEXT_PUBLIC_POSTHOG_KEY=your_posthog_key
 NEXT_PUBLIC_POSTHOG_HOST=https://app.posthog.com
 ```
+
+### 🔒 Configuración de Seguridad
+
+La aplicación implementa múltiples capas de seguridad:
+
+#### CSP (Content Security Policy)
+Configurado en `next.config.js` con políticas nativas de Next.js:
+- **Protección XSS** con directivas estrictas
+- **Compatibilidad MUI** con `'unsafe-inline'` necesario
+- **Hot reload** con `'unsafe-eval'` en desarrollo
+
+#### Headers de Seguridad
+Configurados en `middleware.ts`:
+- **X-Frame-Options: DENY** - Previene clickjacking
+- **X-Content-Type-Options: nosniff** - Previene MIME sniffing
+- **X-XSS-Protection: 1; mode=block** - Protección adicional XSS
+- **Referrer-Policy** - Control de información de referrer
+
+#### Validación de Entorno
+Con `@t3-oss/env-nextjs` y Zod:
+- **Tipado estricto** de variables de entorno
+- **Validación en runtime** con mensajes de error claros
+- **Separación** entre variables de servidor y cliente
 
 ### Tema y Diseño
 
@@ -287,10 +433,13 @@ El proyecto está preparado para múltiples idiomas:
 
 ## 🔒 Seguridad
 
-- **Headers de seguridad** configurados en middleware
-- **Sanitización** de HTML con DOMPurify
-- **Validación** de datos con Zod
-- **Autenticación** preparada para implementación
+- **CSP nativo de Next.js** con configuración optimizada en next.config.js
+- **Headers de seguridad** configurados en middleware (X-Frame-Options, X-XSS-Protection, etc.)
+- **Sanitización** de HTML con DOMPurify para prevenir XSS
+- **Validación** de datos con Zod y @t3-oss/env-nextjs
+- **Protección contra clickjacking** con X-Frame-Options: DENY
+- **Prevención MIME sniffing** con X-Content-Type-Options: nosniff
+- **Control de referrer** con Referrer-Policy estricto
 
 ## 📊 Monitoreo
 
@@ -335,7 +484,22 @@ El proyecto está preparado para múltiples idiomas:
 - [x] **Accesibilidad** básica y contraste adecuado
 - [x] **Build optimizado** para producción
 
-### 🚧 Etapa 2 - En Desarrollo
+### ✅ Etapa 2 - Completada
+
+**Validación de entorno + CSP + Sanitización + Cliente HTTP + BFF + Proxies firmados**
+
+- [x] Validación de entorno con Zod y @t3-oss/env-nextjs
+- [x] CSP (Content Security Policy) con next-safe
+- [x] Sanitización HTML con DOMPurify
+- [x] Cliente HTTP con interceptores de error
+- [x] React Query en layouts privados
+- [x] Route Handlers BFF para auth, payments y kyc
+- [x] Proxies firmados con HMAC
+- [x] Cookies httpOnly para autenticación
+- [x] Smoke tests automatizados
+- [x] Build y typecheck exitosos
+
+### 🚧 Etapa 3 - En Desarrollo
 
 **Dashboard principal + Autenticación + Módulos básicos**
 
@@ -346,7 +510,7 @@ El proyecto está preparado para múltiples idiomas:
 - [ ] i18n completo (es/en)
 - [ ] Testing con Jest y React Testing Library
 
-### 🔮 Etapa 3 - Futuro
+### 🔮 Etapa 4 - Futuro
 
 **Funcionalidades avanzadas + Optimizaciones**
 
